@@ -24,19 +24,21 @@ def main():
             if lst_input[0] == "echo":
                 output = " ".join(lst_input[1:])
                 print(output)
-            elif lst_input[0] == "type":
-                if lst_input[1] in valid_commands:
-                    print(f"{lst_input[1]} is a shell builtin")
-                    continue
-                elif lst_input[1] == "ls":
-                    print(f"ls is {paths[0]}/ls")
-                    continue
-                elif ("cat" in paths[0]) or ("cat" in paths[1]):
-                    print(f"{lst_input[1]} is {paths[1]}/{lst_input[1]}")
-                    continue
+            if command.startswith("type"):
+                cmd = command.split(" ")[1]
+                cmd_path = None
+                paths = PATH.split(":")
+                for path in paths:
+                    if os.path.isfile(f"{path}/{cmd}"):
+                        cmd_path = f"{path}/{cmd}"
+                if cmd in valid_commands:
+                    sys.stdout.write(f"{cmd} is a shell builtin\n")
+                elif cmd_path:
+                    sys.stdout.write(f"{cmd} is {cmd_path}\n")
                 else:
-                    print(f"{lst_input[1]}: not found")
-                    continue
+                    sys.stdout.write(f"{cmd} not found\n")
+                sys.stdout.flush()
+                continue
         
 
 if __name__ == "__main__":
