@@ -13,7 +13,7 @@ def main():
             print(f"{command}: command not found")
             continue
         elif command == "exit 0":
-            False
+            sys.exit(0)
 
 if __name__ == "__main__":
     main()
