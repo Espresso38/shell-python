@@ -3,7 +3,7 @@ import sys
 
 def main():
     
-    valid_commands = ["echo"]
+    valid_commands = ["echo", "exit", "type"]
 
     while True:
         sys.stdout.write("$ ")
@@ -20,6 +20,9 @@ def main():
             if lst_input[0] == "echo":
                 output = " ".join(lst_input[1:])
                 print(output)
+            elif lst_input[0] == "type":
+                if lst_input[1] in valid_commands:
+                    print(f"{lst_input[1]} is a shell builtin")
         
 
 if __name__ == "__main__":
