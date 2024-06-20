@@ -23,6 +23,10 @@ def main():
             elif lst_input[0] == "type":
                 if lst_input[1] in valid_commands:
                     print(f"{lst_input[1]} is a shell builtin\n")
+                    continue
+                else:
+                    print(f"{lst_input[1]}: not found")
+                    continue
         
 
 if __name__ == "__main__":
