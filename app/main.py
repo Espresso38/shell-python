@@ -21,7 +21,10 @@ def main():
                 output = " ".join(lst_input[1:])
                 print(output)
             elif lst_input[0] == "type":
-                if lst_input[1] in valid_commands:
+                if lst_input[1] == "ls":
+                    print(sys.argv[0])
+                    continue
+                elif lst_input[1] in valid_commands:
                     print(f"{lst_input[1]} is a shell builtin")
                     continue
                 else:
