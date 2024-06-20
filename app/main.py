@@ -36,7 +36,7 @@ def main():
                 elif cmd_path:
                     sys.stdout.write(f"{cmd} is {cmd_path}\n")
                 else:
-                    sys.stdout.write(f"{cmd} not found\n")
+                    sys.stdout.write(f"{cmd}: not found\n")
                 sys.stdout.flush()
                 continue
         
