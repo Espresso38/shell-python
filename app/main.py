@@ -6,10 +6,10 @@ def main():
     sys.stdout.flush()
 
     # Wait for user input
-    input = input()
+    input()
 
     command_list = []
-    command = input[1]
+    command = sys.argv[1]
     if command not in command_list:
         print(f"{command}: command not found")
 
