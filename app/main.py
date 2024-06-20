@@ -1,48 +1,49 @@
 import sys
 import os
+import subprocess
+
+
+def find_executable(cmd: str) -> str:
+    path = os.environ.get("PATH")
+    executable_dirs = path.split(":")
+    for dir in executable_dirs:
+        if os.path.exists(f"{dir}/{cmd}"):
+            return f"{dir}/{cmd}"
 
 
 def main():
-    
-    valid_commands = ["echo", "exit", "type"]
-    PATH = os.environ.get("PATH")
-
-    paths = PATH.split(":")
-
     while True:
         sys.stdout.write("$ ")
         sys.stdout.flush()
-        command = input()
-        cmd = command.split(" ")[1]
-        lst_input = command.split()
-        if lst_input[0] == "exit":
-            False
-            sys.exit()
-        elif lst_input[0] not in valid_commands:
-            print(f"{command}: command not found")
-            continue
-        else:
-            if lst_input[0] == "echo":
-                output = " ".join(lst_input[1:])
-                print(output)
-            if os.path.isfile(command.split(" ")[0]):
-                    os.system(command)
+        input_command = input()
+        cmd, *args = input_command.split(" ")
+        command_types = {
+            "echo": "builtin",
+            "exit": "builtin",
+            "type": "builtin",
+        }
+        if cmd == "echo":
+            sys.stdout.write(" ".join(args) + "\n")
+        elif cmd == "exit":
+            sys.exit(0)
+        elif cmd == "type":
+            arg = args[0] if args else ""
+            cmd_type = command_types.get(arg, "nonexistent")
+            if cmd_type == "builtin":
+                sys.stdout.write(f"{arg} is a shell builtin\n")
             else:
-                print(f"{command}: command not found")
-            if command.startswith("type"):
-                cmd_path = None
-                for path in paths:
-                    if os.path.isfile(f"{path}/{cmd}"):
-                        cmd_path = f"{path}/{cmd}"
-                if cmd in valid_commands:
-                    sys.stdout.write(f"{cmd} is a shell builtin\n")
-                elif cmd_path:
-                    sys.stdout.write(f"{cmd} is {cmd_path}\n")
+                path = find_executable(arg)
+                if path:
+                    sys.stdout.write(f"{arg} is {path}\n")
                 else:
-                    sys.stdout.write(f"{cmd}: not found\n")
-                sys.stdout.flush()
-                continue
-        
+                    sys.stdout.write(f"{arg}: not found\n")
+        else:
+            path = find_executable(cmd)
+            if not path:
+                sys.stdout.write(f"{input_command}: command not found\n")
+            else:
+                subprocess.run([cmd] + args)
+
 
 if __name__ == "__main__":
     main()
