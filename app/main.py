@@ -22,7 +22,7 @@ def main():
                 print(output)
             elif lst_input[0] == "type":
                 if lst_input[1] in valid_commands:
-                    print(f"{lst_input[1]} is a shell builtin")
+                    print(f"{lst_input[1]} is a shell builtin\n")
         
 
 if __name__ == "__main__":
