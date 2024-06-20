@@ -3,7 +3,7 @@ import sys
 
 def main():
     
-    valid_commands = []
+    valid_commands = ["echo"]
 
     while True:
         sys.stdout.write("$ ")
@@ -15,6 +15,11 @@ def main():
         elif command not in valid_commands:
             print(f"{command}: command not found")
             continue
+        else:
+            if "echo" in command:
+                list_of_text = command.split()
+                output = " ".join(list_of_text[1:])
+                print(output)
         
 
 if __name__ == "__main__":
