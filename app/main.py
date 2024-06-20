@@ -31,7 +31,7 @@ def main():
                 elif lst_input[1] == "ls":
                     print(f"ls is {paths[0]}/ls")
                     continue
-                elif lst_input[1] in paths[1]:
+                elif (lst_input[1] in paths[0]) or (lst_input[1] in paths[1]):
                     print(f"{lst_input[1]} is {paths[1]}/{lst_input[1]}")
                     continue
                 else:
