@@ -12,6 +12,8 @@ def main():
         if command not in valid_commands:
             print(f"{command}: command not found")
             continue
+        elif command == "exit 0":
+            False
 
 if __name__ == "__main__":
     main()
