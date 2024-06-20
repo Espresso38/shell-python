@@ -21,6 +21,7 @@ def main():
             "echo": "builtin",
             "exit": "builtin",
             "type": "builtin",
+            "pwd": "builtin"
         }
         if cmd == "echo":
             sys.stdout.write(" ".join(args) + "\n")
@@ -37,6 +38,8 @@ def main():
                     sys.stdout.write(f"{arg} is {path}\n")
                 else:
                     sys.stdout.write(f"{arg}: not found\n")
+        elif cmd == "pwd":
+            print(os.getcwd())
         else:
             path = find_executable(cmd)
             if not path:
