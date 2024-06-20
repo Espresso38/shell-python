@@ -14,7 +14,7 @@ def main():
             continue
         elif command == "exit 0":
             False
-            sys.exit(0)
+            sys.exit()
 
 if __name__ == "__main__":
     main()
