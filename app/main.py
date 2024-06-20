@@ -28,6 +28,10 @@ def main():
                 cmd = command.split(" ")[1]
                 cmd_path = None
                 paths = PATH.split(":")
+                if os.paths.isfile(cmd):
+                    os.system(command)
+                else:
+                    print(f"{command}: command not found")
                 for path in paths:
                     if os.path.isfile(f"{path}/{cmd}"):
                         cmd_path = f"{path}/{cmd}"
