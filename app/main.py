@@ -10,25 +10,31 @@ def find_executable(cmd: str) -> str:
     for dir in executable_dirs:
         if os.path.exists(f"{dir}/{cmd}"):
             return f"{dir}/{cmd}"
+    return None
 
-def path_exist(my_path, cmd):
-    if my_path.exists():
+
+def path_exist(my_path: Path, cmd: str):
+    if my_path.exists() and my_path.is_dir():
         os.chdir(my_path)
     else:
         print(f"{cmd}: {my_path}: No such file or directory")
         sys.stdout.flush()
 
+
 def main():
     while True:
         sys.stdout.write("$ ")
         sys.stdout.flush()
-        input_command = input()
-        cmd, *args = input_command.split(" ")
+        input_command = input().strip()
+        if not input_command:
+            continue
+        cmd, *args = input_command.split()
         command_types = {
             "echo": "builtin",
             "exit": "builtin",
             "type": "builtin",
-            "pwd": "builtin"
+            "pwd": "builtin",
+            "cd": "builtin"
         }
         if cmd == "echo":
             sys.stdout.write(" ".join(args) + "\n")
@@ -48,23 +54,13 @@ def main():
         elif cmd == "pwd":
             print(os.getcwd())
         elif cmd == "cd":
-            link = "".join(args)
-            my_path = Path(link)
-            if "../" in link:
-                substring = "../"
-                count = link.count(substring)
-                cdir = os.getcwd()
-                lst_dir = link.split("/")
-                new_dir = Path("/".join(lst_dir[:count]))
-                path_exist(new_dir, cmd)
-            elif "./" in link:
-                cdir = os.getcwd()
-                new_link = Path(cdir + link[2:])
-                path_exist(new_link, cmd)
+            if len(args) == 0:
+                # Change to home directory if no argument is given
+                new_path = Path.home()
             else:
-                path_exist(my_path, cmd)
-            
-
+                link = args[0]
+                new_path = Path(link).expanduser().resolve()
+            path_exist(new_path, cmd)
         else:
             path = find_executable(cmd)
             if not path:
