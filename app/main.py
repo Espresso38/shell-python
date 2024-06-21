@@ -42,7 +42,7 @@ def main():
         elif cmd == "pwd":
             print(os.getcwd())
         elif cmd == "cd":
-            my_path = Path(args)
+            my_path = Path("".join(args))
             if my_path.exists():
                 os.chdir(my_path)
             else:
