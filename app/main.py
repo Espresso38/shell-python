@@ -35,7 +35,6 @@ def main():
             "type": "builtin",
             "pwd": "builtin",
             "cd": "builtin",
-            "mkdir": "builtin"
         }
         if cmd == "echo":
             sys.stdout.write(" ".join(args) + "\n")
