@@ -34,7 +34,8 @@ def main():
             "exit": "builtin",
             "type": "builtin",
             "pwd": "builtin",
-            "cd": "builtin"
+            "cd": "builtin",
+            "mkdir": "builtin"
         }
         if cmd == "echo":
             sys.stdout.write(" ".join(args) + "\n")
@@ -60,6 +61,15 @@ def main():
                 link = args[0]
                 new_path = Path(link).expanduser().resolve()
             path_exist(new_path, cmd)
+        elif cmd == "mkdir":
+            os.mkdir(args[1])
+            except FileExistsError:
+
+                print("Directory already exists.")
+
+            except OSError as err:
+
+                print(f"Error creating directory: {err}")
         else:
             path = find_executable(cmd)
             if not path:
