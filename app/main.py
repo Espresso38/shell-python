@@ -11,7 +11,7 @@ def find_executable(cmd: str) -> str:
         if os.path.exists(f"{dir}/{cmd}"):
             return f"{dir}/{cmd}"
 
-def path_exist(my_path):
+def path_exist(my_path, cmd):
     if my_path.exists():
         os.chdir(my_path)
     else:
@@ -55,11 +55,13 @@ def main():
                 cdir = os.getcwd()
                 lst_dir = link.split("/")
                 new_dir = "/".join(lst_dir[:count])
-                path_exist(new_dir)
+                path_exist(new_dir, cmd)
             elif "./" in link:
                 cdir = os.getcwd()
                 new_link = cdir + link[2:]
-                path_exist(new_link)
+                path_exist(new_link, cmd)
+            else:
+                path_exist(my_path, cmd)
             
 
         else:
