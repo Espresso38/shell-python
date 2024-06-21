@@ -54,8 +54,7 @@ def main():
         elif cmd == "pwd":
             print(os.getcwd())
         elif cmd == "cd":
-            if len(args) == 0:
-                # Change to home directory if no argument is given
+            if (len(args) == 0) or (args[0] == "~"):
                 new_path = Path.home()
             else:
                 link = args[0]
