@@ -62,14 +62,10 @@ def main():
                 new_path = Path(link).expanduser().resolve()
             path_exist(new_path, cmd)
         elif cmd == "mkdir":
-            os.mkdir(args[1])
-            except FileExistsError:
-
+            if not os.path.exists(args[1]):
+                os.mkdir(args[1])
+            else:
                 print("Directory already exists.")
-
-            except OSError as err:
-
-                print(f"Error creating directory: {err}")
         else:
             path = find_executable(cmd)
             if not path:
