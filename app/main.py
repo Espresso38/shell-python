@@ -16,6 +16,7 @@ def path_exist(my_path, cmd):
         os.chdir(my_path)
     else:
         print(f"{cmd}: {my_path}: No such file or directory")
+        return
 
 def main():
     while True:
