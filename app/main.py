@@ -54,11 +54,11 @@ def main():
                 count = link.count(substring)
                 cdir = os.getcwd()
                 lst_dir = link.split("/")
-                new_dir = "/".join(lst_dir[:count])
+                new_dir = Path("/".join(lst_dir[:count]))
                 path_exist(new_dir, cmd)
             elif "./" in link:
                 cdir = os.getcwd()
-                new_link = cdir + link[2:]
+                new_link = Path(cdir + link[2:])
                 path_exist(new_link, cmd)
             else:
                 path_exist(my_path, cmd)
