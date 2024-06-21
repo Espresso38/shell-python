@@ -65,6 +65,12 @@ def main():
                 os.mkdir(args[1])
             else:
                 print("Directory already exists.")
+        elif cmd == "ls":
+            obj = os.scandir()
+            for file in obj:
+                if file.is_dir() or file.is_file():
+                    print(file.name, end= " ")
+            print()
         else:
             path = find_executable(cmd)
             if not path:
