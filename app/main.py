@@ -3,6 +3,7 @@ import os
 import subprocess
 from pathlib import Path
 import urllib.request
+import shutil
 
 
 def find_executable(cmd: str) -> str:
@@ -37,10 +38,16 @@ def main():
             "pwd": "builtin",
             "cd": "builtin",
         }
+        
+        #Print text
         if cmd == "echo":
             sys.stdout.write(" ".join(args) + "\n")
+        
+        #Exit programm
         elif cmd == "exit":
             sys.exit(0)
+        
+        #Check for builtin commands
         elif cmd == "type":
             arg = args[0] if args else ""
             cmd_type = command_types.get(arg, "nonexistent")
@@ -52,6 +59,8 @@ def main():
                     sys.stdout.write(f"{arg} is {path}\n")
                 else:
                     sys.stdout.write(f"{arg}: not found\n")
+        
+        #Return current directory
         elif cmd == "pwd":
             print(os.getcwd())
         elif cmd == "cd":
@@ -61,21 +70,36 @@ def main():
                 link = args[0]
                 new_path = Path(link).expanduser().resolve()
             path_exist(new_path, cmd)
+        
+        #Create new directory
         elif cmd == "mkdir":
             if not os.path.exists(args[1]):
                 os.mkdir(args[1])
             else:
                 print("Directory already exists.")
+        
+        #Show files in current directory
         elif cmd == "ls":
             obj = os.scandir()
             for file in obj:
                 if file.is_dir() or file.is_file():
                     print(file.name, end= " ")
             print()
+        
+        #Download file from link
         elif cmd == "wget":
             url = args[0]
             file_path = args[0].split("/")[-1]
             urllib.request.urlretrieve(url, file_path)
+        
+        #Remove file or directory
+        elif cmd == "rm":
+            if os.path.isfile(args[0]):
+                os.remove(args[0])
+            elif os.path.isdir(args[0]):
+                shutil.rmtree(args[0])
+        
+        #If nothing matches
         else:
             path = find_executable(cmd)
             if not path:
