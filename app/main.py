@@ -63,6 +63,8 @@ def main():
         #Return current directory
         elif cmd == "pwd":
             print(os.getcwd())
+
+        #Change to directory
         elif cmd == "cd":
             if (len(args) == 0) or (args[0] == "~"):
                 new_path = Path.home()
