@@ -11,6 +11,11 @@ def find_executable(cmd: str) -> str:
         if os.path.exists(f"{dir}/{cmd}"):
             return f"{dir}/{cmd}"
 
+def path_exist(my_path):
+    if my_path.exists():
+        os.chdir(my_path)
+    else:
+        print(f"{cmd}: {my_path}: No such file or directory")
 
 def main():
     while True:
@@ -42,11 +47,21 @@ def main():
         elif cmd == "pwd":
             print(os.getcwd())
         elif cmd == "cd":
-            my_path = Path("".join(args))
-            if my_path.exists():
-                os.chdir(my_path)
-            else:
-                print(f"{cmd}: {my_path}: No such file or directory")
+            link = "".join(args)
+            my_path = Path(link)
+            if "../" in link:
+                substring = "../"
+                count = link.count(substring)
+                cdir = os.getcwd()
+                lst_dir = link.split("/")
+                new_dir = "/".join(lst_dir[:count])
+                path_exist(new_dir)
+            elif "./" in link:
+                cdir = os.getcwd()
+                new_link = cdir + link[2:]
+                path_exist(new_link)
+            
+
         else:
             path = find_executable(cmd)
             if not path:
