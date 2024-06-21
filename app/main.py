@@ -1,6 +1,7 @@
 import sys
 import os
 import subprocess
+from pathlib import Path
 
 
 def find_executable(cmd: str) -> str:
@@ -40,6 +41,12 @@ def main():
                     sys.stdout.write(f"{arg}: not found\n")
         elif cmd == "pwd":
             print(os.getcwd())
+        elif cmd == "cd":
+            my_path = Path(args)
+            if my_path.exists():
+                os.chdir(my_path)
+            else:
+                print(f"{cmd}: {my_path}: No such file or directory")
         else:
             path = find_executable(cmd)
             if not path:
