@@ -2,6 +2,7 @@ import sys
 import os
 import subprocess
 from pathlib import Path
+import urllib.request
 
 
 def find_executable(cmd: str) -> str:
@@ -71,6 +72,10 @@ def main():
                 if file.is_dir() or file.is_file():
                     print(file.name, end= " ")
             print()
+        elif cmd == "wget":
+            url = args[0]
+            file_path = args[0].split("/")[-1]
+            urllib.request.urlretrieve(url, file_path)
         else:
             path = find_executable(cmd)
             if not path:
